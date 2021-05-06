@@ -1,0 +1,134 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>User Auth</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/fontawesome.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container mt-2 mb-2">
+    <div class="row">
+        <div class="col-2">
+            <i class="fab fa-google-plus-g mr-2"></i>
+            <i class="fab fa-linkedin mr-2"></i>
+            <i class="fab fa-facebook-f mr-2"></i>
+        </div>
+        <div class="col"></div>
+        <div class="col-3">
+            <i class="fa fa-envelope mr-1 text-primary"></i>
+            <span>info@healthcare.com</span>
+        </div>
+        <div class="col-2">
+            <i class="fas fa-phone-alt mr-1 text-primary"></i>
+            <span>10101</span>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" >
+      <i class="fas fa-plus-square fa-3x text-white "></i>
+    </a>
+    <a class="navbar-brand ml-2 mr-5" href="{% url 'home' %}">
+      <h3 class="font-weight-bold text-white mt-2">HEALTH CARE</h3>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" >
+      <ul class="navbar-nav ml-5 ">
+        <li class="nav-item {% ifequal request.resolver_match.url_name 'home' %} active {% endifequal %}">
+          <a class="nav-link text-light font-weight-bold font-medium" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item {% ifequal request.resolver_match.url_name 'about' %} active {% endifequal %}"  >
+          <a class="nav-link text-light font-weight-bold font-medium" href="{% url 'about' %}">AboutUs</a>
+        </li>
+        <li class="nav-item {% ifequal request.resolver_match.url_name 'contact' %} active {% endifequal %}">
+          <a class="nav-link text-light font-weight-bold font-medium" href="{% url 'contact' %}">Contact</a>
+        </li>
+         {% if user.is_authenticated and user.usertype == 'R'  %}
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium  " href="{% url 'r_dashboard' %}">Dashboard</a>
+        </li>
+          {% endif %}
+      </ul>
+      {% ifequal user.is_authenticated False %} 
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item {% ifequal request.resolver_match.url_name 'loginview' %} active {% endifequal %}" >
+          <a class="nav-link text-light font-weight-bold font-medium" href="{% url 'signup' %}" >Register</a>
+        </li>
+        <li class="nav-item {% ifequal request.resolver_match.url_name 'registerview' %} active {% endifequal %}" >
+            <a class="nav-link text-light font-weight-bold font-medium  " href="{% url 'login' %}">Login</a>
+        </li>
+      </ul>
+     {% endifequal %}
+        {% if user.is_authenticated and user.usertype == 'P'  %}
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium " href="{% url 'profile' %}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium " href="{% url 'patient_appointment' %}">Your Appointment's</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium " href="{% url 'profile' %}">Invoice & Payments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium " href="{% url 'med-history' %}">Medical History</a>
+        </li>
+      </ul>
+        {% endif %}
+        {% if user.is_authenticated and user.usertype == 'D' %}
+      <ul class="navbar-nav mr-auto" *ngIf="isLoggedIn && role === 'DOCTOR'">
+         <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium " href="{% url 'doc_profile' %}">Profile</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link text-light font-weight-bold font-medium  " href="{% url 'doctor_appointment' %}">Appointments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium  " href="{% url 'doc-prescriptions' %}">Prescriptions</a>
+        </li>
+      </ul>
+        {% endif %}
+        {% if user.is_authenticated and user.usertype == 'HR' %}
+      <ul class="navbar-nav mr-auto" *ngIf="isLoggedIn && role === 'HR'">
+        <li class="nav-item">
+          <a class="nav-link text-light font-weight-bold font-medium  " href="{% url 'hr_dashboard' %}">Dashboard</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link text-light font-weight-bold font-medium  " href="{% url 'hr_dashboard' %}">Accounting</a>
+        </li>
+      </ul>
+        {% endif %}
+        {% ifequal user.is_authenticated True %}
+      <div class="dropdown ml-0 mr-3" >
+        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-circle fa-3x "></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item text-secondary" href="#"><i class="fas fa-cog "></i><span class="ml-3">Settings</span></a>
+          <a class="dropdown-item text-secondary" href="#"><i class="fas fa-user "></i><span class="ml-3">Profile</span></a>
+          <a class="dropdown-item text-secondary" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt "></i><span class="ml-3">Sign Out</span></a>
+        </div>
+      </div>
+      {% endifequal %}
+    </div>
+  </nav>
+
+    <div class="mt-3">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/popper.js' %}"></script>
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  {% comment %} <script src="{% static 'js/fontawesome.js' %}"></script> {% endcomment %}
+</body>
+</html>

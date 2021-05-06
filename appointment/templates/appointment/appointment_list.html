@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      {% if appointment_list %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col"> Date </th>
+              <th scope="col"> Time </th>
+              <th scope="col">{% if user.usertype == 'P' %}Consulting Doctor {% else %}Patient Info {% endif %}</th>
+              {% if user.usertype == 'P' %} <th scope="col"> Status </th> {% endif %}
+              {% if user.usertype == 'D' %}
+                <th scope="col">Mark Completed</th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+          {% for appointment in appointment_list %}
+            <tr>
+              <td>{{appointment.date}}</td>
+              <td>{{appointment.time}}</td>
+              <td>
+                {% if user.usertype == 'P' %}
+                  {{appointment.doctor}}
+                {% else %}
+                  {{appointment.patient}}
+                {% endif %}
+              </td>
+              <td>
+              {% if user.usertype == 'D' %}
+                <form action="{% url 'appointment_update_pk' appointment.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success" role="button">Done</button>
+                </form>
+              {% endif %}
+              {% if user.usertype == 'P' %}<td> {{appointment.status}} </td> {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>There are no Appointments.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

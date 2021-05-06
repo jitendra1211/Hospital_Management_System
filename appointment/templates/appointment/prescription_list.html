@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container">
+        {% if user.usertype == 'D' %}
+            <div class="row">
+                <div class="col">
+                    <a class="btn btn-outline-info" href="{% url 'doc-prescriptions-create' %}"> Create Prescription</a>
+                </div>
+                <div class="col"></div>
+            </div>
+        {% endif %}
+        <div class="row my-3">
+            <div class="col"></div>
+            <div class="col-8">
+                {% for prescription in prescription_list %}
+                    <div class="card my-3">
+                      <div class="card-body">
+                        <h5 class="card-title">{{prescription.date}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{prescription.symptoms}}</h6>
+                        <p class="card-text">{{prescription.prescription}}</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                      </div>
+                        <div class="card-footer text-muted">
+                            {% if user.usertype == 'D' %}
+                                Prescribed to {{prescription.patient}}
+                            {% else %}
+                                Prescribed by {{prescription.doctor}}
+                            {% endif%}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+{% endblock %}

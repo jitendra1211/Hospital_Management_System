@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <iframe class="w-100" height="400" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.4592438549034!2d73.7944259149746!3d18.55332318738991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf20cd3216a5%3A0xe7c3e8ac1b83cd33!2sVascon%20Eco%20Tower!5e0!3m2!1sen!2sin!4v1597044253288!5m2!1sen!2sin"  frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+  </div>
+ </div>
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1>Get In Touch</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9">
+      <form>
+        <div class="form-row ">
+          <div class="col form-group">
+            <textarea class="form-control" rows="10" placeholder="Your Message"></textarea>
+          </div>
+        </div>
+        <div class="form-row mt-4">
+          <div class="col-sm-6 form-group">
+            <input  class="form-control" name="name" type="name" placeholder="Enter Your Name" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <input  class="form-control" name="email" type="email" placeholder="Email" required>
+          </div>
+        </div>
+        <div class="form-row mt-4" >
+          <div class="col form-group">
+            <input  class="form-control" name="subject" type="text" placeholder="Enter Subject" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-outline-info mt-4">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm">
+      <div class="row">
+        <div class="col-4">
+          <i class="far fa-hospital fa-2x text-primary"></i>
+        </div>
+        <div class="col">
+          <h5>Pune, Maharashtra</h5>
+          <p>203, Vascon tower</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <i class="fas fa-mobile-alt fa-2x text-primary"></i>
+        </div>
+        <div class="col">
+          <h5>+1234 545634</h5>
+          <p>Mon to Fri 9am to 6pm</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <i class="fas fa-envelope fa-2x text-primary"></i>
+        </div>
+        <div class="col">
+          <h5>support@healthcare.com</h5>
+          <p>Send us your query</p>
+          <p>Anytime!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="row my-3 mx-1">
+        <div class="col p-0 mx-3 card bg-primary text-center">
+          <div class="card-header">
+            Total  Doctors
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{totalDoc}}</p>
+          </div>
+        </div>
+        <div class="col p-0 mx-3 card bg-info text-center">
+          <div class="card-header">
+            Total  Patients
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{totalPat}}</p>
+          </div>
+        </div>
+        <div class="col p-0 mx-3 card bg-success text-center">
+          <div class="card-header">
+            On Duty Doctors
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{onDutyDoc}}</p>
+          </div>
+        </div>
+    </div>
+    <div class="row mx-3">
+        <div class="col p-0">
+            <div class="card">
+              <div class="card-header">
+                Doctors
+              </div>
+              <div class="card-body">
+                {% if doc_list %}
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Age</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Department</th>
+                          <th scope="col">Attendance</th>
+                          <th scope="col">Salary</th>
+                          <th scope="col">Update</th>
+                          <th scope="col">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for doctor in doc_list %}
+                        <tr>
+                          <td>{{doctor.name}}</td>
+                          <td>{{doctor.phone}}</td>
+                          <td>{{doctor.email}}</td>
+                          <td>{{doctor.gender}}</td>
+                          <td> {{doctor.age}}</td>
+                          <td> {{doctor.status}}</td>
+                          <td> {{doctor.department}}</td>
+                          <td> {{doctor.attendance}}</td>
+                          <td> {{doctor.salary}}</td>
+                          <td>
+                              <a href="{% url 'update_doc_profile_pk' pk=doctor.user.id %}" class="btn btn-warning">Update</a>
+                          <td>
+                            <form action="{% url 'delete_doc_profile_pk' pk=doctor.user.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" role="button">Delete</button>
+                            </form>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  {% else %}
+                    <p>There are no Appointments.</p>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

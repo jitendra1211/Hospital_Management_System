@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{title}}</h3>
+            
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% include 'baseform.html' %}
+                <input type="submit" class="btn btn-primary btn-block" value="{{button_type}}">
+            </form> 
+            </div>
+        </div>
+        </div>
+    </div>
+ </div>
+{% endblock content %}
